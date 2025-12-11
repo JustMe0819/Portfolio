@@ -8,7 +8,7 @@ const navLinks = document.querySelectorAll('.nav-menu a');
 // Toggle du menu
 burger.addEventListener('click', () => {
     navMenu.classList.toggle('active');
-
+    
     // Animation du burger
     const spans = burger.querySelectorAll('span');
     if (navMenu.classList.contains('active')) {
@@ -33,6 +33,32 @@ navLinks.forEach(link => {
     });
 });
 
+
+// ====================================
+// animation des chiffres des stats
+// ====================================
+
+const statNumbers = document.querySelectorAll('.stat-number');
+
+statNumbers.forEach(stat => {
+    const target = +stat.getAttribute('data-target');
+    let count = 0;
+    const speed = 50; // vitesse de l'animation (ms)
+
+    const updateCount = () => {
+        const increment = Math.ceil(target / 50); // ajuster le smooth
+        count += increment;
+        if (count > target) count = target;
+        stat.textContent = count;
+        if (count < target) {
+            setTimeout(updateCount, speed);
+        }
+    };
+
+    updateCount();
+});
+
+
 // ====================================
 // Smooth scroll pour les ancres
 // ====================================
@@ -40,11 +66,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-
+        
         if (target) {
             const navHeight = document.querySelector('.navbar').offsetHeight;
             const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
-
+            
             window.scrollTo({
                 top: targetPosition,
                 behavior: 'smooth'
@@ -61,21 +87,21 @@ const navbar = document.querySelector('.navbar');
 
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
-
+    
     // Cacher/montrer la navbar au scroll
     if (currentScroll > lastScroll && currentScroll > 100) {
         navbar.style.transform = 'translateY(-100%)';
     } else {
         navbar.style.transform = 'translateY(0)';
     }
-
+    
     // Ajouter une ombre quand on scroll
     if (currentScroll > 50) {
         navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)';
     } else {
         navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
     }
-
+    
     lastScroll = currentScroll;
 });
 
@@ -112,34 +138,34 @@ const contactForm = document.getElementById('contactForm');
 
 contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
-
+    
     // Récupérer les valeurs
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
-
+    
     // Validation simple
     if (name && email && message) {
         // Ici tu peux ajouter l'envoi vers un service comme Formspree, EmailJS, etc.
         // Pour l'instant, on simule l'envoi
-
+        
         // Animation du bouton
         const submitBtn = contactForm.querySelector('.btn-submit');
         const originalText = submitBtn.textContent;
         submitBtn.textContent = 'Envoi en cours...';
         submitBtn.disabled = true;
-
+        
         // Simuler l'envoi
         setTimeout(() => {
             submitBtn.textContent = 'Message envoyé ! ✓';
             submitBtn.style.backgroundColor = '#4CAF50';
-
+            
             // Réinitialiser le formulaire
             contactForm.reset();
-
+            
             // Afficher un message de confirmation
             showNotification('Merci pour votre message ! Je vous répondrai dans les plus brefs délais. 😊');
-
+            
             // Rétablir le bouton après 3 secondes
             setTimeout(() => {
                 submitBtn.textContent = originalText;
@@ -170,7 +196,7 @@ function showNotification(message) {
         max-width: 400px;
     `;
     notification.textContent = message;
-
+    
     // Ajouter l'animation CSS
     const style = document.createElement('style');
     style.textContent = `
@@ -196,9 +222,9 @@ function showNotification(message) {
         }
     `;
     document.head.appendChild(style);
-
+    
     document.body.appendChild(notification);
-
+    
     // Retirer après 5 secondes
     setTimeout(() => {
         notification.style.animation = 'slideOutRight 0.5s ease-out';
@@ -214,7 +240,7 @@ function showNotification(message) {
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const heroImage = document.querySelector('.hero-image img');
-
+    
     if (heroImage) {
         heroImage.style.transform = `translateY(${scrolled * 0.5}px)`;
     }
@@ -225,7 +251,7 @@ window.addEventListener('scroll', () => {
 // ====================================
 function animateNumbers() {
     const cards = document.querySelectorAll('.info-card');
-
+    
     cards.forEach((card, index) => {
         card.style.animationDelay = `${index * 0.1}s`;
     });
@@ -243,13 +269,13 @@ const sections = document.querySelectorAll('section[id]');
 
 function highlightNavigation() {
     const scrollY = window.pageYOffset;
-
+    
     sections.forEach(section => {
         const sectionHeight = section.offsetHeight;
         const sectionTop = section.offsetTop - 100;
         const sectionId = section.getAttribute('id');
         const navLink = document.querySelector(`.nav-menu a[href="#${sectionId}"]`);
-
+        
         if (navLink) {
             if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
                 navLink.style.opacity = '1';
@@ -295,7 +321,7 @@ document.addEventListener('keydown', (e) => {
 function typeWriter(element, text, speed = 100) {
     let i = 0;
     element.innerHTML = '';
-
+    
     function type() {
         if (i < text.length) {
             element.innerHTML += text.charAt(i);
@@ -303,35 +329,18 @@ function typeWriter(element, text, speed = 100) {
             setTimeout(type, speed);
         }
     }
-
+    
     type();
 }
 
-
-// ====================================
-// Initialisation EmailJS et envoi formulaire
-// ====================================
-
-//emailjs.init("5fpYG8BJR0fO-FxY_"); 
-
-//document.getElementById("contactForm").addEventListener("submit", function (e) {
-//    e.preventDefault();
-//
-//    emailjs.send("service_thylia", "template_bh866nq", {
-//        name: document.getElementById("name").value,
-//        email: document.getElementById("email").value,
-//        message: document.getElementById("message").value
-//    })
-//        .then(() => {
-//            alert("Votre message a bien été envoyé !");
-//            this.reset();
-//        })
-//        .catch((error) => {
-//            console.error("Erreur EmailJS :", error);
-//            alert("Une erreur est survenue. Réessayez plus tard.");
-//        });
-//});
-
+// Décommenter pour activer l'effet typing sur le hero
+// window.addEventListener('load', () => {
+//     const heroTitle = document.querySelector('.hero h1');
+//     if (heroTitle) {
+//         const text = heroTitle.textContent;
+//         typeWriter(heroTitle, text, 50);
+//     }
+// });
 
 // ====================================
 // Console message pour les curieux 🕵️
