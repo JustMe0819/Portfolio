@@ -8,7 +8,7 @@ const navLinks = document.querySelectorAll('.nav-menu a');
 // Toggle du menu
 burger.addEventListener('click', () => {
     navMenu.classList.toggle('active');
-    
+
     // Animation du burger
     const spans = burger.querySelectorAll('span');
     if (navMenu.classList.contains('active')) {
@@ -66,11 +66,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-        
+
         if (target) {
             const navHeight = document.querySelector('.navbar').offsetHeight;
             const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
-            
+
             window.scrollTo({
                 top: targetPosition,
                 behavior: 'smooth'
@@ -87,21 +87,21 @@ const navbar = document.querySelector('.navbar');
 
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
-    
+
     // Cacher/montrer la navbar au scroll
     if (currentScroll > lastScroll && currentScroll > 100) {
         navbar.style.transform = 'translateY(-100%)';
     } else {
         navbar.style.transform = 'translateY(0)';
     }
-    
+
     // Ajouter une ombre quand on scroll
     if (currentScroll > 50) {
         navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)';
     } else {
         navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
     }
-    
+
     lastScroll = currentScroll;
 });
 
@@ -138,34 +138,34 @@ const contactForm = document.getElementById('contactForm');
 
 contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    
+
     // Récupérer les valeurs
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
-    
+
     // Validation simple
     if (name && email && message) {
         // Ici tu peux ajouter l'envoi vers un service comme Formspree, EmailJS, etc.
         // Pour l'instant, on simule l'envoi
-        
+
         // Animation du bouton
         const submitBtn = contactForm.querySelector('.btn-submit');
         const originalText = submitBtn.textContent;
         submitBtn.textContent = 'Envoi en cours...';
         submitBtn.disabled = true;
-        
+
         // Simuler l'envoi
         setTimeout(() => {
             submitBtn.textContent = 'Message envoyé ! ✓';
             submitBtn.style.backgroundColor = '#4CAF50';
-            
+
             // Réinitialiser le formulaire
             contactForm.reset();
-            
+
             // Afficher un message de confirmation
             showNotification('Merci pour votre message ! Je vous répondrai dans les plus brefs délais. 😊');
-            
+
             // Rétablir le bouton après 3 secondes
             setTimeout(() => {
                 submitBtn.textContent = originalText;
@@ -196,7 +196,7 @@ function showNotification(message) {
         max-width: 400px;
     `;
     notification.textContent = message;
-    
+
     // Ajouter l'animation CSS
     const style = document.createElement('style');
     style.textContent = `
@@ -222,9 +222,9 @@ function showNotification(message) {
         }
     `;
     document.head.appendChild(style);
-    
+
     document.body.appendChild(notification);
-    
+
     // Retirer après 5 secondes
     setTimeout(() => {
         notification.style.animation = 'slideOutRight 0.5s ease-out';
@@ -240,7 +240,7 @@ function showNotification(message) {
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const heroImage = document.querySelector('.hero-image img');
-    
+
     if (heroImage) {
         heroImage.style.transform = `translateY(${scrolled * 0.5}px)`;
     }
@@ -251,7 +251,7 @@ window.addEventListener('scroll', () => {
 // ====================================
 function animateNumbers() {
     const cards = document.querySelectorAll('.info-card');
-    
+
     cards.forEach((card, index) => {
         card.style.animationDelay = `${index * 0.1}s`;
     });
@@ -269,13 +269,13 @@ const sections = document.querySelectorAll('section[id]');
 
 function highlightNavigation() {
     const scrollY = window.pageYOffset;
-    
+
     sections.forEach(section => {
         const sectionHeight = section.offsetHeight;
         const sectionTop = section.offsetTop - 100;
         const sectionId = section.getAttribute('id');
         const navLink = document.querySelector(`.nav-menu a[href="#${sectionId}"]`);
-        
+
         if (navLink) {
             if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
                 navLink.style.opacity = '1';
@@ -321,7 +321,7 @@ document.addEventListener('keydown', (e) => {
 function typeWriter(element, text, speed = 100) {
     let i = 0;
     element.innerHTML = '';
-    
+
     function type() {
         if (i < text.length) {
             element.innerHTML += text.charAt(i);
@@ -329,18 +329,214 @@ function typeWriter(element, text, speed = 100) {
             setTimeout(type, speed);
         }
     }
-    
+
     type();
 }
 
-// Décommenter pour activer l'effet typing sur le hero
-// window.addEventListener('load', () => {
-//     const heroTitle = document.querySelector('.hero h1');
-//     if (heroTitle) {
-//         const text = heroTitle.textContent;
-//         typeWriter(heroTitle, text, 50);
-//     }
-// });
+// =============================
+// MODAL PROJETS
+// =============================
+document.addEventListener("DOMContentLoaded", () => {
+
+    const modal = document.getElementById("projectModal");
+    const closeBtn = modal.querySelector(".close-modal");
+    const contactBtn = modal.querySelector(".btn-contact");
+
+    const modalTitle = modal.querySelector("#modal-title");
+    const modalDescription = modal.querySelector("#modal-description");
+    const modalDetails = modal.querySelector("#modal-details");
+
+    const modalContent = modal.querySelector(".modal-content");
+
+    const modalImage = document.createElement("img");
+    modalImage.className = "modal-image";
+
+    const modalGithub = document.createElement("a");
+    modalGithub.className = "btn-github";
+    modalGithub.target = "_blank";
+    modalGithub.textContent = "Voir le projet sur GitHub";
+
+    const modalFigma = document.createElement("a");
+    modalFigma.className = "btn-github";
+    modalFigma.target = "_blank";
+    modalFigma.textContent = "Voir le projet sur Figma";
+
+    modalContent.insertBefore(modalImage, modalTitle);
+    modalContent.insertBefore(modalGithub, contactBtn);
+    modalContent.insertBefore(modalFigma, contactBtn);
+
+    const projectsData = {
+        webdoc: {
+            title: "Webdocumentaire – Cathédrale de Meaux",
+            description:
+                "Projet de webdocumentaire réalisé en groupe autour de la cathédrale de Meaux.",
+            image: "docs/webdoc.png",
+            github: "https://github.com/JustMe0819/Webdocumentaire-.git",
+            details: [
+                "HTML / CSS / JavaScript",
+                "Travail collaboratif",
+                "Narration interactive",
+                "Gestion des médias"
+            ]
+        },
+
+        oxyair: {
+            title: "Oxy'Air – Maquette Figma",
+            description:
+                "Maquette Figma d’une version écologique d’Airbnb.",
+            image: "docs/oxy'air.png",
+            figma: "https://www.figma.com/design/rjZjgJXUmHMx2jmzn7meXV/Oxy-Air?node-id=0-1&t=lbvNaHeUGp0EJq2f-1",
+            details: [
+                "UI / UX Design",
+                "Prototype Figma",
+                "Approche écoresponsable"
+            ]
+        },
+
+        sushifast: {
+            title: "SushiFast",
+            description:
+                "Site de commande de sushis développé en React, réalisé en duo.",
+            image: "docs/sushi.png",
+            github: "https://github.com/LeonardoHenriquesM/SushiFast.git",
+            details: [
+                "React + Vite",
+                "React Router",
+                "Données JSON",
+                "Responsive design"
+            ]
+        },
+
+        edudrive: {
+            title: "Edudrive – Maquette Figma",
+            description:
+                "Maquette d’un site d’auto-école, développement non finalisé.",
+            image: "docs/sae401.png",
+            figma: "https://www.figma.com/design/66d6l1aBhjZZezY6YH2cCs/SAE-401?node-id=14-102&t=pfdxj2rSn9NtKQ9a-1",
+            details: [
+                "Maquette Figma",
+                "Angular (début)",
+                "PHP (base)"
+            ]
+        },
+
+        pixeldev: {
+            title: "PixelDev – En cours",
+            description:
+                "Plateforme de formation développée en React et Spring Boot.",
+            image: "docs/sae501.png",
+            github: "https://github.com/LeonardoHenriquesM/iut.meaux.pixeldev.git",
+            details: [
+                "React",
+                "Spring Boot",
+                "Projet de groupe"
+            ]
+        },
+
+        blender: {
+            title: "Salle de bain – Blender",
+            description:
+                "Modélisation 3D complète d’une salle de bain.",
+            image: "docs/salledebain.png",
+            github: "https://github.com/JustMe0819/Salle-de-bain-Blender.git",
+            details: [
+                "Blender",
+                "Modélisation 3D",
+                "Textures & éclairages"
+            ]
+        }
+    };
+
+    document.querySelectorAll(".btn-project-view").forEach(button => {
+        button.addEventListener("click", () => {
+
+            const key = button.dataset.projet;
+            const project = projectsData[key];
+            if (!project) return;
+
+            modalTitle.textContent = project.title;
+            modalDescription.textContent = project.description;
+
+            modalImage.src = project.image;
+            modalImage.alt = project.title;
+
+            modalGithub.href = project.github;
+
+            modalDetails.innerHTML = "";
+            project.details.forEach(detail => {
+                const li = document.createElement("li");
+                li.textContent = detail;
+                modalDetails.appendChild(li);
+            });
+
+            // On cache les deux par défaut
+            modalGithub.style.display = "none";
+            modalFigma.style.display = "none";
+
+            // Si le projet a un GitHub
+            if (project.github) {
+                modalGithub.href = project.github;
+                modalGithub.style.display = "inline-block";
+            }
+
+            // Si le projet a un Figma
+            if (project.figma) {
+                modalFigma.href = project.figma;
+                modalFigma.style.display = "inline-block";
+            }
+
+            modal.classList.add("active");
+        });
+    });
+
+    closeBtn.addEventListener("click", () => {
+        modal.classList.remove("active");
+    });
+
+    modal.addEventListener("click", e => {
+        if (e.target === modal) {
+            modal.classList.remove("active");
+        }
+    });
+
+    // =============================
+    // CONTACT : fermer + scroll
+    // =============================
+    contactBtn.addEventListener("click", e => {
+        e.preventDefault();
+
+        modal.classList.remove("active");
+
+        setTimeout(() => {
+            const contactSection = document.querySelector("#contact");
+            if (contactSection) {
+                contactSection.scrollIntoView({ behavior: "smooth" });
+            }
+        }, 200);
+    });
+
+});
+
+const scrollTopBtn = document.getElementById("scrollTop");
+
+// afficher / cacher le bouton
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 400) {
+        scrollTopBtn.classList.add("show");
+    } else {
+        scrollTopBtn.classList.remove("show");
+    }
+});
+
+// scroll vers le haut
+scrollTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+
+
 
 // ====================================
 // Console message pour les curieux 🕵️
