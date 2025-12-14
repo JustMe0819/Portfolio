@@ -146,35 +146,68 @@ contactForm.addEventListener('submit', (e) => {
 
     // Validation simple
     if (name && email && message) {
-        // Ici tu peux ajouter l'envoi vers un service comme Formspree, EmailJS, etc.
-        // Pour l'instant, on simule l'envoi
-
-        // Animation du bouton
         const submitBtn = contactForm.querySelector('.btn-submit');
         const originalText = submitBtn.textContent;
         submitBtn.textContent = 'Envoi en cours...';
         submitBtn.disabled = true;
 
-        // Simuler l'envoi
-        setTimeout(() => {
-            submitBtn.textContent = 'Message envoyé ! ✓';
-            submitBtn.style.backgroundColor = '#4CAF50';
+        // Préparer les données pour PHP
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('message', message);
 
-            // Réinitialiser le formulaire
-            contactForm.reset();
+        // Envoi réel vers contact.php
+        fetch('php/contact.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.text())
+        .then(res => {
+            if(res === 'success') {
+                submitBtn.textContent = 'Message envoyé ! ✓';
+                submitBtn.style.backgroundColor = '#4CAF50';
 
-            // Afficher un message de confirmation
-            showNotification('Merci pour votre message ! Je vous répondrai dans les plus brefs délais. 😊');
+                // Réinitialiser le formulaire
+                contactForm.reset();
 
+                // Message de confirmation
+                showNotification('Merci pour votre message ! Je vous répondrai dans les plus brefs délais. 😊');
+            } else {
+                submitBtn.textContent = 'Erreur, réessayez';
+                submitBtn.style.backgroundColor = '#f44336';
+                showNotification('Erreur lors de l’envoi du message. 😢');
+            }
+        })
+        .catch(() => {
+            submitBtn.textContent = 'Erreur réseau';
+            submitBtn.style.backgroundColor = '#f44336';
+            showNotification('Erreur réseau, réessayez plus tard. 😢');
+        })
+        .finally(() => {
             // Rétablir le bouton après 3 secondes
             setTimeout(() => {
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
                 submitBtn.style.backgroundColor = '';
             }, 3000);
-        }, 1500);
+        });
     }
 });
+
+// Fonction pour afficher un message (à adapter selon ton style)
+function showNotification(msg) {
+    let notif = document.getElementById('formMessage');
+    if (!notif) {
+        notif = document.createElement('div');
+        notif.id = 'formMessage';
+        contactForm.parentNode.appendChild(notif);
+    }
+    notif.textContent = msg;
+    notif.style.marginTop = '10px';
+    notif.style.fontWeight = 'bold';
+}
+
 
 // ====================================
 // Fonction de notification
