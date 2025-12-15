@@ -106,7 +106,7 @@ window.addEventListener('scroll', () => {
 });
 
 // ====================================
-// Animation au scroll (Intersection Observer)
+// Animation au scroll 
 // ====================================
 const observerOptions = {
     threshold: 0.1,
@@ -162,36 +162,36 @@ contactForm.addEventListener('submit', (e) => {
             method: 'POST',
             body: formData
         })
-        .then(res => res.text())
-        .then(res => {
-            if(res === 'success') {
-                submitBtn.textContent = 'Message envoyé ! ✓';
-                submitBtn.style.backgroundColor = '#4CAF50';
+            .then(res => res.text())
+            .then(res => {
+                if (res === 'success') {
+                    submitBtn.textContent = 'Message envoyé ! ✓';
+                    submitBtn.style.backgroundColor = '#4CAF50';
 
-                // Réinitialiser le formulaire
-                contactForm.reset();
+                    // Réinitialiser le formulaire
+                    contactForm.reset();
 
-                // Message de confirmation
-                showNotification('Merci pour votre message ! Je vous répondrai dans les plus brefs délais. 😊');
-            } else {
-                submitBtn.textContent = 'Erreur, réessayez';
+                    // Message de confirmation
+                    showNotification('Merci pour votre message ! Je vous répondrai dans les plus brefs délais. 😊');
+                } else {
+                    submitBtn.textContent = 'Erreur, réessayez';
+                    submitBtn.style.backgroundColor = '#f44336';
+                    showNotification('Erreur lors de l’envoi du message. 😢');
+                }
+            })
+            .catch(() => {
+                submitBtn.textContent = 'Erreur réseau';
                 submitBtn.style.backgroundColor = '#f44336';
-                showNotification('Erreur lors de l’envoi du message. 😢');
-            }
-        })
-        .catch(() => {
-            submitBtn.textContent = 'Erreur réseau';
-            submitBtn.style.backgroundColor = '#f44336';
-            showNotification('Erreur réseau, réessayez plus tard. 😢');
-        })
-        .finally(() => {
-            // Rétablir le bouton après 3 secondes
-            setTimeout(() => {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-                submitBtn.style.backgroundColor = '';
-            }, 3000);
-        });
+                showNotification('Erreur réseau, réessayez plus tard. 😢');
+            })
+            .finally(() => {
+                // Rétablir le bouton après 3 secondes
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.backgroundColor = '';
+                }, 3000);
+            });
     }
 });
 
@@ -406,10 +406,9 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "docs/webdoc.png",
             github: "https://github.com/JustMe0819/Webdocumentaire-.git",
             details: [
-                "HTML / CSS / JavaScript",
-                "Travail collaboratif",
-                "Narration interactive",
-                "Gestion des médias"
+                "Ce projet consiste en la réalisation d’un webdocumentaire interactif visant à faire découvrir la cathédrale de Meaux à travers son histoire, son architecture et les personnes qui la font vivre.",
+                "Dans le cadre du projet, nous avons pris contact avec les responsables de la cathédrale, organisé des rendez-vous et mené une interview de l’évêque auxiliaire, pour laquelle nous avons conçu les questions et assuré le tournage ainsi que le montage avec les sous-titres.",
+                "Le webdocumentaire intègre également des audios de plusieurs habitants partageant leur point de vue, ainsi que des articles et des photographies réalisés par notre équipe afin d’illustrer et enrichir l’expérience narrative."
             ]
         },
 
@@ -420,9 +419,9 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "docs/oxy'air.png",
             figma: "https://www.figma.com/design/rjZjgJXUmHMx2jmzn7meXV/Oxy-Air?node-id=0-1&t=lbvNaHeUGp0EJq2f-1",
             details: [
-                "UI / UX Design",
-                "Prototype Figma",
-                "Approche écoresponsable"
+                "Ce projet consiste en la conception d’une maquette UI/UX sur Figma pour Oxy’Air, une alternative écologique à Airbnb mettant en avant des logements respectueux de l’environnement.",
+                "L’objectif était de réfléchir à une expérience utilisateur claire et intuitive, tout en intégrant une identité visuelle cohérente avec les valeurs d’écologie et de durabilité.",
+                "Le travail a porté sur la structure des pages, la hiérarchisation des informations, le parcours utilisateur ainsi que la réalisation d’un prototype interactif permettant de simuler la navigation."
             ]
         },
 
@@ -433,10 +432,9 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "docs/sushi.png",
             github: "https://github.com/LeonardoHenriquesM/SushiFast.git",
             details: [
-                "React + Vite",
-                "React Router",
-                "Données JSON",
-                "Responsive design"
+                "Ce projet consiste en la création d’un site web de commande de sushis développé avec React et Vite. L’objectif était de concevoir une application moderne permettant de consulter différents menus et de naviguer de manière fluide entre les pages.",
+                "Le site propose une liste de menus dynamiques, une page de détails pour chaque menu ainsi qu’un système de panier simulant une commande en ligne.",
+                "L’interface a été pensée pour être claire et responsive, en s’inspirant de l’univers de la restauration japonaise, tout en utilisant des données JSON pour structurer le contenu."
             ]
         },
 
@@ -447,9 +445,10 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "docs/sae401.png",
             figma: "https://www.figma.com/design/66d6l1aBhjZZezY6YH2cCs/SAE-401?node-id=14-102&t=pfdxj2rSn9NtKQ9a-1",
             details: [
-                "Maquette Figma",
-                "Angular (début)",
-                "PHP (base)"
+                "Ce projet consiste en la conception d’une maquette de site web pour une auto-école, réalisée sur Figma dans le cadre d’un projet académique.",
+                "L’objectif était de proposer une interface claire et accessible permettant aux utilisateurs de consulter les formations, les tarifs et les informations pratiques liées à l’auto-école.",
+                "Le projet incluait également une première approche du développement, initiée avec Angular et PHP, mais restée à l’état de base afin de se concentrer principalement sur la réflexion UI/UX et la structure du site."
+
             ]
         },
 
@@ -460,9 +459,10 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "docs/sae501.png",
             github: "https://github.com/LeonardoHenriquesM/iut.meaux.pixeldev.git",
             details: [
-                "React",
-                "Spring Boot",
-                "Projet de groupe"
+                "Ce projet consiste en la conception d’une plateforme de formation en ligne réalisée dans le cadre d'un gros projet de fin de semestre.",
+                "L’objectif est de proposer un espace permettant aux utilisateurs d’accéder à différents contenus pédagogiques, organisés par thématiques, via une interface claire et moderne.",
+                "Le projet est actuellement en cours de développement et repose sur une architecture front-end en React et un back-end en Spring Boot, avec une attention portée à la structuration des données et à la communication entre les deux parties."
+
             ]
         },
 
@@ -473,9 +473,9 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "docs/salledebain.png",
             github: "https://github.com/JustMe0819/Salle-de-bain-Blender.git",
             details: [
-                "Blender",
-                "Modélisation 3D",
-                "Textures & éclairages"
+                "Ce projet consiste en la modélisation et la mise en scène d’une salle de bain en 3D réalisée sur Blender. L’objectif était de concevoir un espace réaliste en travaillant à la fois la modélisation des objets, les textures, les matériaux et la lumière.",
+                "La scène comprend plusieurs éléments de mobilier et de décoration (meubles, sanitaires, accessoires), modélisés et assemblés afin de créer une pièce cohérente et fonctionnelle.",
+                "J'ai essayé au mieux de reproduire les éléments sur l'image de référence afin d'avoir le meilleur rendu"
             ]
         }
     };
